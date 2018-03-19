@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
     puppet.vm.box_version = "1.0.2"
     puppet.vm.network "private_network", ip: "10.13.37.2"
     puppet.vm.network :forwarded_port, guest: 8080, host: 8080, id: "puppetdb"
-    puppet.vm.network :forwarded_port, guest: 8100, host: 8100, id: "vault"
+    puppet.vm.network :forwarded_port, guest: 8200, host: 8200, id: "vault"
 
     puppet.vm.synced_folder "code", "/etc/puppetlabs/code"
 
