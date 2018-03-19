@@ -30,6 +30,12 @@ Vagrant.configure(2) do |config|
 
     node1.vm.provision "shell", path: "puppetupgrade.sh"
     node1.vm.provision "shell", inline: "/bin/systemctl start puppet.service"
+
+    # Run an agent run to check Puppetserver master is running ok
+    node1.vm.provision "puppet_server" do |puppet_server|
+      puppet_server.puppet_server = "puppet"
+      puppet_server.options = "--test"
+    end
   end
 
 end
