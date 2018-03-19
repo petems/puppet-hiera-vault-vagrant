@@ -10,7 +10,7 @@ class profile::master {
     action => 'accept',
   }
 
-  firewall { '8140 accept - puppetserver':
+  firewall { '8100 accept - vault':
     dport  => '8100',
     proto  => 'tcp',
     action => 'accept',
@@ -18,7 +18,6 @@ class profile::master {
 
   class { '::puppetserver':
     before  => Service['puppet'],
-    require => File['/etc/systemd/system/puppetserver.service.d/local.conf'],
   }
 
   class{'::profile::vault_hiera_puppetserver':}
