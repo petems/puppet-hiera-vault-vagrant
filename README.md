@@ -59,7 +59,115 @@ Notice: Applied catalog in 0.52 seconds
 
 Vault gets installed and started by default on the Puppetserver node.
 
-The local port 8100 gets forwarded to the Vagrant VM to port 8100.
+The local port 8200 gets forwarded to the Vagrant VM to port 8200.
+
+After the inital provisioning is done, initialise vault:
+
+```
+$ VAULT_ADDR='http://127.0.0.1:8200' vault init
+
+Unseal Key 1: qduQtx3VNgLN/9WP1ZRzCq1ZB709DZ3TS/D52YS6yLzr
+Unseal Key 2: YSXO2hST8+FHoBrn1SgI6yn+ApriQpqiDKhrnLXH9ojP
+Unseal Key 3: o+Og63B2/cJiX/8VoshTlBIb/dkCoeGrgSv2bPLQzBjE
+Unseal Key 4: lfNiq0/B5V1IXyKzivjDRXqetHtcXqaHj8prF9RclL08
+Unseal Key 5: DL3Xf4FSxIv6+NEYdZCZaskf0jcJ0bowe34r7Gdl7Y+9
+Initial Root Token: 677b88e3-300c-3a5a-ea2f-72ba70be5516
+
+Vault initialized with 5 keys and a key threshold of 3. Please
+securely distribute the above keys. When the vault is re-sealed,
+restarted, or stopped, you must provide at least 3 of these keys
+to unseal it again.
+
+Vault does not store the master key. Without at least 3 keys,
+your vault will remain permanently sealed.
+```
+
+Take note of the token. Replace the string `<REPLACE-ME>` in the `hiera.yaml-after-provision` file
+
+Unseal Vault:
+
+```
+$ VAULT_ADDR='http://127.0.0.1:8200' vault unseal
+Key (will be hidden):
+```
+
+Use 3 of the unseal keys from above.
+
+Then add a secret to demonstrate the Vault Hiera backend using the token you were given:
+
+
+```
+$ VAULT_TOKEN=677b88e3-300c-3a5a-ea2f-72ba70be5516 VAULT_ADDR='http://127.0.0.1:8200' vault write secret/puppet/common/vault_notify value=hello_123
+Success! Data written to: secret/puppet/common/vault_notify
+```
+
+Now, change the name of your hiera file on so it'll be picked up as part of the hierachy:
+
+```
+$ mv /vagrant/code/environments/production/hiera.yaml-after_provision /vagrant/code/environments/production/hiera.yaml
+```
+
+Now, run an agent run on your node1 node:
+
+```
+$ puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Retrieving locales
+Info: Loading facts
+Info: Caching catalog for node1.home
+Info: Applying configuration version '1521467005'
+Notice: testing vault hello_123
+Notice: /Stage[main]/Profile::Vault_message/Notify[testing vault hello_123]/message: defined 'message' as 'testing vault hello_123'
+Notice: Applied catalog in 0.14 seconds
+[root@node1 vagrant]# exit
+```
+
+Now change it...
+
+```
+$ VAULT_TOKEN=677b88e3-300c-3a5a-ea2f-72ba70be5516 VAULT_ADDR='http://127.0.0.1:8200' vault write secret/puppet/common/vault_notify value=gbye_123
+Success! Data written to: secret/puppet/common/vault_notify
+```
+
+And see the message change:
+
+```
+```
+$ puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Retrieving locales
+Info: Loading facts
+Info: Caching catalog for node1.home
+Info: Applying configuration version '1521467005'
+Notice: testing vault gbye_123
+Notice: /Stage[main]/Profile::Vault_message/Notify[testing vault gbye_123]/message: defined 'message' as 'testing vault gbye_123'
+Notice: Applied catalog in 0.14 seconds
+[root@node1 vagrant]# exit
+```
+```
+
+You can also do this from your host:
+```
+$ vagrant provision node1 --provision-with puppet_server
+==> node1: Running provisioner: puppet_server...
+==> node1: Running Puppet agent...
+==> node1: Info: Using configured environment 'production'
+==> node1: Info: Retrieving pluginfacts
+==> node1: Info: Retrieving plugin
+==> node1: Info: Retrieving locales
+==> node1: Info: Loading facts
+==> node1: Info: Caching catalog for node1.home
+==> node1: Info: Applying configuration version '1521467181'
+==> node1: Notice: testing vault hello_123
+==> node1: Notice: /Stage[main]/Profile::Vault_message/Notify[testing vault hello_123]/message: defined 'message' as 'testing vault hello_123'
+==> node1: Notice: Applied catalog in 0.16 seconds
+```
+
+
 
 # Security
 
