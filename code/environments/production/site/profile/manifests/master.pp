@@ -10,8 +10,8 @@ class profile::master {
     action => 'accept',
   }
 
-  firewall { '8100 accept - vault':
-    dport  => '8100',
+  firewall { '8200 accept - vault':
+    dport  => '8200',
     proto  => 'tcp',
     action => 'accept',
   }
