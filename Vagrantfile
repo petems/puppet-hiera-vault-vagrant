@@ -2,8 +2,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "puppet", primary: true do |puppet|
     puppet.vm.hostname = "puppet"
-    puppet.vm.box = "puppetlabs/centos-7.0-64-puppet"
-    puppet.vm.box_version = "1.0.2"
+    puppet.vm.box = "geerlingguy/centos7"
+    puppet.vm.box_version = "1.2.6"
     puppet.vm.network "private_network", ip: "10.13.37.2"
     puppet.vm.network :forwarded_port, guest: 8080, host: 8080, id: "puppetdb"
     puppet.vm.network :forwarded_port, guest: 8200, host: 8200, id: "vault"
