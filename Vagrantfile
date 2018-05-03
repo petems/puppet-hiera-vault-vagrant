@@ -16,6 +16,11 @@ Vagrant.configure(2) do |config|
 
     puppet.vm.provision "shell", path: "puppetupgrade.sh"
 
+    puppet.vm.provision "puppet" do |puppetserver_vault_bootstrap|
+      puppetserver_vault_bootstrap.environment = "puppetserver_vault_bootstrap"
+      puppetserver_vault_bootstrap.environment_path = ["vm", "/etc/puppetlabs/code/environments"]
+    end
+
     puppet.vm.provision "puppet" do |puppetapply|
       puppetapply.environment = "production"
       puppetapply.environment_path = ["vm", "/etc/puppetlabs/code/environments"]
