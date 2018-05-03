@@ -12,7 +12,7 @@
 	url = https://github.com/puppetlabs/puppetlabs-inifile
 [submodule "code/environments/production/modules/postgresql"]
 	path = code/environments/production/modules/postgresql
-	url = https://github.com/puppetlabs/puppetlabs-postgresql/
+	url = git@github.com:puppetlabs/puppetlabs-postgresql.git
 [submodule "code/environments/production/modules/concat"]
 	path = code/environments/production/modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat
