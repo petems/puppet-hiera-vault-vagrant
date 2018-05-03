@@ -61,3 +61,6 @@
 [submodule "code/environments/production/modules/vault"]
 	path = code/environments/production/modules/vault
 	url = https://github.com/jsok/puppet-vault
+[submodule "code/environments/production/modules/file_capability"]
+	path = code/environments/production/modules/file_capability
+	url = https://github.com/smoeding/puppet-file_capability
