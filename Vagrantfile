@@ -16,10 +16,11 @@ Vagrant.configure(2) do |config|
 
     puppet.vm.provision "shell", path: "puppetupgrade.sh"
 
-    puppet.vm.provision "puppet" do |puppetserver_vault_bootstrap|
-      puppetserver_vault_bootstrap.environment = "puppetserver_vault_bootstrap"
-      puppetserver_vault_bootstrap.environment_path = ["vm", "/etc/puppetlabs/code/environments"]
-    end
+$script = <<-SCRIPT
+puppet apply -e 'include ::role::master' --modulepath=/etc/puppetlabs/code/environments/production/modules/:/etc/puppetlabs/code/environments/production/site/ --environment=puppetserver_vault_bootstrap
+SCRIPT
+
+    puppet.vm.provision "shell", inline: $script
 
     puppet.vm.provision "puppet" do |puppetapply|
       puppetapply.environment = "production"
@@ -29,7 +30,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "node1", primary: true do |node1|
     node1.vm.hostname = "node1"
-    node1.vm.box = "puppetlabs/centos-7.0-64-puppet"
+    node1.vm.box = "geerlingguy/centos7"
     node1.vm.box_version = "1.0.2"
     node1.vm.network "private_network", ip: "10.13.37.3"
 
