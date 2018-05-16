@@ -15,11 +15,11 @@ EOT
 }
 
 resource "vault_generic_secret" "vault_notify" {
-  path = "secret/puppet/common"
+  path = "secret/puppet/node1/vault_notify"
 
   data_json = <<EOT
 {
-  "vault_notify": "Hello World"
+  "value": "Hello World"
 }
 EOT
 }
