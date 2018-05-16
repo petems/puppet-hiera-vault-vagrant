@@ -31,7 +31,7 @@ SCRIPT
   config.vm.define "node1", primary: true do |node1|
     node1.vm.hostname = "node1"
     node1.vm.box = "geerlingguy/centos7"
-    node1.vm.box_version = "1.0.2"
+    node1.vm.box_version = "1.2.6"
     node1.vm.network "private_network", ip: "10.13.37.3"
 
     node1.vm.provision "shell", path: "puppetupgrade.sh"
