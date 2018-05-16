@@ -2,7 +2,7 @@
 
 class profile::vault_message {
 
-  $vault_notify = lookup({"name" => "vault_notify", "value_type" => String, "default_value" => "No Vault Secret Found", "merge" => "first"})
+  $vault_notify = lookup({"name" => "vault_notify", "default_value" => "No Vault Secret Found"})
   notify { "testing vault ${vault_notify}":}
 
 }
