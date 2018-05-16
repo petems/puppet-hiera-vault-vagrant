@@ -15,4 +15,3 @@ hierarchy:
       mounts:
         generic:
           - secret/puppet/%{::trusted.certname}/
-          - secret/puppet/common/
