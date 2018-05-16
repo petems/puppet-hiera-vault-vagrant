@@ -21,6 +21,8 @@ class profile::vault_server {
         tls_disable   => 1,
       },
     },
+    version   => '0.10.1',
+    enable_ui => true,
   }
 
 }
