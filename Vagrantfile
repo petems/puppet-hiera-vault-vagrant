@@ -14,7 +14,7 @@ Vagrant.configure(2) do |config|
       vb.memory = "3072"
     end
 
-    puppet.vm.provision "shell", path: "puppetupgrade.sh"
+    puppet.vm.provision "shell", path: "install_puppet.sh"
 
 $script = <<-SCRIPT
 puppet apply -e 'include ::role::master' --modulepath=/etc/puppetlabs/code/environments/production/modules/:/etc/puppetlabs/code/environments/production/site/ --environment=puppetserver_vault_bootstrap
@@ -34,7 +34,7 @@ SCRIPT
     node1.vm.box_version = "1.2.6"
     node1.vm.network "private_network", ip: "10.13.37.3"
 
-    node1.vm.provision "shell", path: "puppetupgrade.sh"
+    node1.vm.provision "shell", path: "install_puppet.sh"
     node1.vm.provision "shell", inline: "/bin/systemctl start puppet.service"
 
     # Run an agent run to check Puppetserver master is running ok

@@ -4,8 +4,8 @@ if [ ! -f /etc/provisioned ] ; then
   # remove strange manually placed repo file
   /bin/rm -f /etc/yum.repos.d/puppetlabs*
 
-  # install Puppet 5.x release repo
-  /bin/yum -y install https://yum.puppet.com/puppet5/puppet5-release-el-7.noarch.rpm
+  # install Puppet 6.x release repo
+  /bin/yum -y install https://yum.puppet.com/puppet6/puppet6-release-el-7.noarch.rpm
   if [ $? -ne 0 ] ; then
     echo "Something went wrong installing the repository RPM"
     exit 1
