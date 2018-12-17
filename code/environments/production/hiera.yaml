@@ -13,5 +13,5 @@ hierarchy:
       token: 97402490-eeb0-6530-13f6-fc0525503f23
       default_field: value
       mounts:
-        generic:
+        kv:
           - secret/puppet/%{::trusted.certname}/
