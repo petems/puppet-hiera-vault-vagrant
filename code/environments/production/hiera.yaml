@@ -13,5 +13,5 @@ hierarchy:
       token: /etc/vault_token.txt
       default_field: value
       mounts:
-        kv:
+        puppet:
           - '%{::trusted.certname}/'
