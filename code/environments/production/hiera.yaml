@@ -14,4 +14,4 @@ hierarchy:
       default_field: value
       mounts:
         kv:
-          - secret/puppet/%{::trusted.certname}/
+          - '%{::trusted.certname}/'
