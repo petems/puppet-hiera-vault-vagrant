@@ -10,7 +10,7 @@ hierarchy:
         - '^password.*'
       ssl_verify: false
       address: http://puppet:8200
-      token: 97402490-eeb0-6530-13f6-fc0525503f23
+      token: /etc/vault_token.txt
       default_field: value
       mounts:
         kv:
