@@ -7,11 +7,11 @@
 #
 class profile::base {
 
-  host { 'puppet':
+  host { 'puppet.vm':
     ip => '10.13.37.2',
   }
 
-  host { 'node1':
+  host { 'node1.vm':
     ip => '10.13.37.3',
   }
 

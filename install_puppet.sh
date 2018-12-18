@@ -18,7 +18,7 @@ if [ ! -f /etc/provisioned ] ; then
     exit 1
   fi
 
-  echo "10.13.37.2    puppet" >> /etc/hosts
+  echo "10.13.37.2    puppet.vm" >> /etc/hosts
 
   # Update curl and install unzip
   /bin/yum -y install curl unzip
