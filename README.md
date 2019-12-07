@@ -71,6 +71,7 @@ VAULT_KEY=$(grep '^Unseal Key 1:' vault.keys | awk '{print $4}')
 export VAULT_TOKEN
 /usr/local/bin/vault operator unseal "$VAULT_KEY"
 echo $VAULT_TOKEN > /etc/vault_token.txt
+echo $VAULT_KEY > /etc/vault_key.txt
 SCRIPT
 ```
 
