@@ -8,18 +8,20 @@ resource "vault_policy" "hiera_vault" {
   name = "hiera"
 
   policy = <<EOT
-path "secret/puppet/*" {
+path "puppet/*" {
   capabilities = ["create", "read", "update", "delete", "list"]
 }
 EOT
 }
 
-resource "vault_generic_secret" "vault_notify" {
-  path = "secret/puppet/node1/vault_notify"
+resource "vault_generic_secret" "vault_vm_notify" {
+  path = "puppet/node1.vm/vault_notify"
 
   data_json = <<EOT
 {
   "value": "Hello World"
 }
 EOT
+
+  depends_on = [vault_generic_secret.vault_notify]
 }
