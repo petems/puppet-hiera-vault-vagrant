@@ -25,4 +25,12 @@ class profile::vault_server {
     enable_ui => true,
   }
 
+  file { '/usr/bin/vault':
+    ensure => link,
+    target => '/usr/local/bin/vault',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+  }
+
 }
